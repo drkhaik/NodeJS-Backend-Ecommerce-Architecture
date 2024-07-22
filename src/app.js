@@ -16,13 +16,7 @@ const { checkOverload } = require(`./helpers/check.connect`);
 // checkOverload();
 
 // init routes
-app.get('/', (req, res) => {
-    const strCompress = 'Hello drkhaik';
-    return res.status(200).json({
-        message: 'Welcome to WSV eCommerce',
-        metadata: strCompress.repeat(1000)
-    })
-});
+app.use('/', require('./routes/index'));
 
 // handling error
 
