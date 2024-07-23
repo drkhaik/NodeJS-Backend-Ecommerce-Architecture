@@ -3,6 +3,8 @@
 const shopModel = require("../models/shop.model");
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const KeyTokenService = require("./keyToken.service");
+const { createTokenPair } = require('../auth/authUtils');
 const RoleShop = {
     SHOP: 'SHOP',
     WRITER: 'WRITER',
@@ -31,8 +33,8 @@ class AccessService {
                 name, email, password: passwordHash, roles: [RoleShop.SHOP]
             });
 
-            // register success redirect to login page
-            // register success redirect to home page => USE
+            // register success then redirect to login page
+            // register success then redirect to home page => USE
             if(newShop){
                 // created privateKey, publicKey
                 const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
@@ -40,6 +42,39 @@ class AccessService {
                 });
 
                 console.log({privateKey, publicKey});
+
+                const publicKeyString = await KeyTokenService.createKeyToken({
+                    newShop: newShop._id,
+                    publicKey
+                });
+
+                if(!publicKeyString){
+                    return {
+                        code: '20003',
+                        message: 'Error when create publicKey'
+                    }
+                }
+
+                // created token pair
+                const tokens = await createTokenPair(
+                    {userId: newShop._id, email},
+                    publicKey,
+                    privateKey
+                );
+                console.log(`Created Token Success::: ${tokens}`);
+
+                return {
+                    code: 201,
+                    metadata: {
+                        shop: newShop,
+                        tokens
+                    }
+                }
+            }
+
+            return {
+                code: 200,
+                metadata: null
             }
 
         }catch(error){
