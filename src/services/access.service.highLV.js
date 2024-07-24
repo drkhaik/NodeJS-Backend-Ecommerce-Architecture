@@ -38,37 +38,40 @@ class AccessService {
             // register success then redirect to home page => USE
             if(newShop){
                 // created privateKey, publicKey
-                // const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
-                //     modulusLength: 4096,
-                //     publicKeyEncoding: {
-                //         type: 'pkcs1', // public key cryptography standard 1
-                //         format: 'pem',
-                //     },
-                //     privateKeyEncoding: {
-                //         type: 'pkcs1',
-                //         format: 'pem',
-                //     },
-                // });
-                const publicKey = crypto.randomBytes(32).toString('hex');
-                const privateKey = crypto.randomBytes(32).toString('hex');
-                console.log({privateKey, publicKey});
-
-                const keyStore = await KeyTokenService.createKeyToken({
-                    userId: newShop._id,
-                    publicKey,
-                    privateKey
+                const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
+                    modulusLength: 4096,
+                    publicKeyEncoding: {
+                        type: 'pkcs1', // public key cryptography standard 1
+                        format: 'pem',
+                    },
+                    privateKeyEncoding: {
+                        type: 'pkcs1',
+                        format: 'pem',
+                    },
                 });
 
-                if (!keyStore){
+                console.log({privateKey, publicKey});
+
+                const publicKeyString = await KeyTokenService.createKeyToken({
+                    userId: newShop._id,
+                    publicKey
+                });
+
+                if(!publicKeyString){
                     return {
                         code: '20003',
-                        message: 'keyStore Error'
+                        message: 'publicKeyString Error'
                     }
                 }
+                console.log(`publicKeyString::: ${publicKeyString}`);
+
+                const publicKeyObject = crypto.createPublicKey(publicKeyString);
+                console.log(`publicKeyObject:::`, publicKeyObject);
+
                 // created token pair
                 const tokens = await createTokenPair(
                     {userId: newShop._id, email},
-                    publicKey,
+                    publicKeyObject,
                     privateKey
                 );
                 console.log(`Created Token Success:::`, tokens);
