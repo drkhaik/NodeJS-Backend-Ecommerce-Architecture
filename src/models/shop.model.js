@@ -1,5 +1,5 @@
 'use strict'
-// With strict mode, you can not, for example, use undeclared variables.
+// With strict mode, you can not use undeclared variables.
 
 const { model, Schema, Types} = require('mongoose');
 

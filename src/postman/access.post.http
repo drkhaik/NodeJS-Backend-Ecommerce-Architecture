@@ -4,6 +4,7 @@
 
 POST {{url_dev}}shop/signup
 Content-Type: application/json
+x-api-key: 504eca4b053304abf9e4c32d3375e40512206f34f7ac05b97c2c98c4d9a78306989665da523fa7f65a51fc6e7c4ebc24667a5c15bc18b5e777feac7cfb9fb9dd
 
 {
     "name": "drkhaikdev06",
