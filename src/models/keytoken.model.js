@@ -20,9 +20,13 @@ const keyTokenSchema = new Schema({
         type: String,
         required: true,
     },
-    refreshToken: {
-        type: Array,
+    refreshTokensUsed: {
+        type: Array, // RTs that have been used
         default: []
+    },
+    refreshToken: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,

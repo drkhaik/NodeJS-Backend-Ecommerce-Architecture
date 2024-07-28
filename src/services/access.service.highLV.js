@@ -52,7 +52,7 @@ class AccessService {
 
                 console.log({privateKey, publicKey});
 
-                const publicKeyString = await KeyTokenService.createKeyToken({
+                const publicKeyString = await KeyTokenService.saveKeyToken({
                     userId: newShop._id,
                     publicKey
                 });
