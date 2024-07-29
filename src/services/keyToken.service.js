@@ -1,7 +1,8 @@
 'use strict'
 
 const { filter } = require("compression");
-const keytokenModel = require("../models/keytoken.model");
+const keyTokenModel = require("../models/keytoken.model");
+const {Types} = require('mongoose');
 
 class KeyTokenService {
 
@@ -9,7 +10,7 @@ class KeyTokenService {
         try {
             // level 0
             // const publicKeyString = publicKey.toString();
-            // const tokens = await keytokenModel.create({
+            // const tokens = await keyTokenModel.create({
             //     user: userId, 
             //     publicKey,
             //     privateKey
@@ -21,11 +22,19 @@ class KeyTokenService {
             }, options = { upsert: true, new: true };
             // upsert set true meaning if find data then update, otherwise create new one
             // new set true meaning return back the data updated
-            const tokens = await keytokenModel.findOneAndUpdate(filter, update, options)
+            const tokens = await keyTokenModel.findOneAndUpdate(filter, update, options)
             return tokens ? tokens.publicKey : null;            
         } catch (error) {
             return error;
         }
+    }
+
+    static findByUserId = async (userId) => {
+        return await keyTokenModel.findOne({ user: new Types.ObjectId(userId) }).lean();
+    }
+
+    static removeKeyTokenById = async (id) => {
+        return await keyTokenModel.deleteOne({ _id: new Types.ObjectId(id) });
     }
 }
 
