@@ -20,6 +20,38 @@ class AccessService {
     /*
         check refresh token used or not
     */
+    
+    static handleRefreshTokenV2 = async ({keyStore, user, refreshToken}) => {
+        const {userId, email} = user;
+
+        if(keyStore.refreshTokensUsed.includes(refreshToken)){
+            await KeyTokenService.removeKeyTokenByUserId(userId);
+            throw new ForbiddenError('Error: Token used! Pls Re-login!');
+        }
+
+        if (keyStore.refreshToken !== refreshToken) throw new AuthFailureError('Error: Shop not registered!');
+
+        const shop = await findByEmail({ email });
+        if (!shop) throw new AuthFailureError('Error: Shop not registered 2!');
+
+        // create new token pair
+        const tokens = await createTokenPair({ userId: userId, email }, keyStore.publicKey, keyStore.privateKey);
+
+        // update token
+        await keyStore.updateOne({
+            $set: {
+                refreshToken: tokens.refreshToken,
+            },
+            $addToSet: {
+                refreshTokensUsed: refreshToken
+            }
+        })
+
+        return {
+            user: { userId: userId, email },
+            tokens
+        }
+    }
 
     static handleRefreshToken = async (refreshToken) => {
         // check this refreshToken is in refreshTokenUsed
