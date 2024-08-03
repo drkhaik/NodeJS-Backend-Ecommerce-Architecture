@@ -3,7 +3,7 @@
 const { findById } = require("../services/apikey.service");
 
 const HEADER = {
-    API_KEY: 'x-api-key',
+    API_KEY: 'x-api-key', // x-api-key is not used by user but by proxy. user -> proxy -> backend.
     AUTHORIZATION: 'authorization',
 }
 

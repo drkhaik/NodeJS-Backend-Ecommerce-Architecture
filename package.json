@@ -20,7 +20,8 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mongoose": "^8.5.1"
+    "mongoose": "^8.5.1",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "morgan": "^1.10.0"
