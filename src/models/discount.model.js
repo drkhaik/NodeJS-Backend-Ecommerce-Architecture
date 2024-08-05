@@ -1,5 +1,4 @@
 'use strict'
-const e = require('express');
 // With strict mode, you can not use undeclared variables.
 
 const { model, Schema, Types } = require('mongoose');
@@ -12,6 +11,7 @@ const discountSchema = new Schema({
     discount_description: { type: String, required: true },
     discount_type: { type: String, default: 'fixed_amount' }, // percentage, fixed_amount
     discount_value: { type: Number, required: true }, // 10.000 10%
+    discount_max_value: { type: Number, required: true }, // 10.000 10%
     discount_code: {type: String, required: true},
     discount_start_date: { type: Date, required: true },
     discount_end_date: { type: Date, required: true },
@@ -22,7 +22,7 @@ const discountSchema = new Schema({
     discount_min_order_value: { type: Number, required: true }, // minimum order value to use this discount
     discount_shop_owner: { type: Schema.Types.ObjectId, ref: 'Shop' }, // which shop this discount belongs to
     discount_is_active: { type: Boolean, default: true },
-    discount_applies_to: {type: String, required: true, enum: ['all', 'specific_products']},
+    discount_apply_to: {type: String, required: true, enum: ['all', 'specific_products']},
     discount_product_id: { type: Array, default: [] }, // which products this discount applies to
 }, {
     timestamps: true,
