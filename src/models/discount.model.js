@@ -18,11 +18,11 @@ const discountSchema = new Schema({
     discount_max_use: { type: Number, required: true }, // how many times this discount can be used
     discount_use_count: { type: Number, required: true }, // how many times this discount has been used
     discount_users_used: { type: Array, default: [] }, // which users have used this discount
-    discount_max_uses_per_users: { type: Number, required: true }, // how many times this discount can be used by a user
+    discount_max_use_per_user: { type: Number, required: true }, // how many times this discount can be used by a user
     discount_min_order_value: { type: Number, required: true }, // minimum order value to use this discount
     discount_shop_owner: { type: Schema.Types.ObjectId, ref: 'Shop' }, // which shop this discount belongs to
     discount_is_active: { type: Boolean, default: true },
-    discount_apply_to: {type: String, required: true, enum: ['all', 'specific_products']},
+    discount_apply_to: {type: String, required: true, enum: ['all', 'specific']},
     discount_product_id: { type: Array, default: [] }, // which products this discount applies to
 }, {
     timestamps: true,

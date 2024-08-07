@@ -1,14 +1,8 @@
 const discount = require("../discount.model");
-const { convertToObjectId, getSelectData, getUnselectData } = require('../../utils');
+const { getSelectData, getUnselectData } = require('../../utils');
 
-const findDiscountByCodeAndShopOwner = async ({
-    code, 
-    shop_owner
-}) => {
-    return await discount.findOne({
-        discount_code: code,
-        discount_shop_owner: convertToObjectId(shop_owner),
-    }).lean();
+const findDiscountByCodeAndShopOwner = async ({ model, filter}) => {
+    return await model.findOne(filter).lean();
 }
 
 const getAllDiscountCodeSelect = async ({ limit = 50, page = 1, sort = 'ctime', filter, select, model }) => {
