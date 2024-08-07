@@ -56,7 +56,7 @@ class DiscountService {
             discount_shop_owner: shop_owner,
             discount_is_active: is_active,
             discount_apply_to: apply_to,
-            discount_product_id: apply_to === 'all' || product_id,
+            discount_product_ids: apply_to === 'all' || product_id,
         })
 
         return newDiscount;
@@ -94,7 +94,7 @@ class DiscountService {
             discount_shop_owner: shop_owner,
             discount_is_active: is_active,
             discount_apply_to: apply_to,
-            discount_product_id: apply_to === 'all' || product_id,
+            discount_product_ids: apply_to === 'all' || product_id,
         }, {new: true});
 
         return updateDiscount;
@@ -112,7 +112,7 @@ class DiscountService {
         });
         if (!foundDiscount || !foundDiscount.discount_is_active) throw new NotFoundError('Error: Discount code not found!');
 
-        const { discount_apply_to, discount_product_id } = foundDiscount;
+        const { discount_apply_to, discount_product_ids } = foundDiscount;
         let products;
         if(discount_apply_to === 'all'){
             // get all product
@@ -132,7 +132,7 @@ class DiscountService {
             // get specific product
             products = await findAllProducts({
                 filter: {
-                    _id: {$in: discount_product_id},
+                    _id: {$in: discount_product_ids},
                     isPublished: true,
                 },
                 limit: +limit,
@@ -174,7 +174,7 @@ class DiscountService {
 
         const { 
             // discount_apply_to,
-            // discount_product_id,
+            // discount_product_ids,
             discount_max_use,
             discount_start_date,
             discount_end_date,
@@ -188,7 +188,7 @@ class DiscountService {
         // check the discount is specific or all, if specific then check product suitable or not
 
         // if(discount_apply_to === 'specific'){
-        //     const checkProductApply = discount_product_id.filter(product => ));
+        //     const checkProductApply = discount_product_ids.filter(product => ));
         // }
 
         if (!discount_max_use) throw new NotFoundError('Error: Discount code are out!');

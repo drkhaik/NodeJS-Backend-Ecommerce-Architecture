@@ -1,4 +1,3 @@
-const discount = require("../discount.model");
 const { getSelectData, getUnselectData } = require('../../utils');
 
 const findDiscountByCodeAndShopOwner = async ({ model, filter}) => {

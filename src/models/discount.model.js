@@ -23,7 +23,7 @@ const discountSchema = new Schema({
     discount_shop_owner: { type: Schema.Types.ObjectId, ref: 'Shop' }, // which shop this discount belongs to
     discount_is_active: { type: Boolean, default: true },
     discount_apply_to: {type: String, required: true, enum: ['all', 'specific']},
-    discount_product_id: { type: Array, default: [] }, // which products this discount applies to
+    discount_product_ids: { type: Array, default: [] }, // which products this discount applies to
 }, {
     timestamps: true,
     collection: COLLECTION_NAME
