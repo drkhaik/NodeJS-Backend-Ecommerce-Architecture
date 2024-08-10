@@ -162,12 +162,12 @@ class DiscountService {
         return discounts;
     }
     
-    static async checkDiscountAmount({ code, userId, products, shopId }){
+    static async checkDiscountAmount({ code, userId, products, shop_owner }){
         const foundDiscount = await findDiscountByCodeAndShopOwner({
             model: discount,
             filter: {
                 discount_code: code,
-                discount_shop_owner: convertToObjectId(shopId),
+                discount_shop_owner: convertToObjectId(shop_owner),
             }
         });
         if (!foundDiscount || !foundDiscount.discount_is_active) throw new NotFoundError('Error: Discount code not found!');

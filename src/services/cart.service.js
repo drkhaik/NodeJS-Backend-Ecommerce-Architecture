@@ -38,12 +38,12 @@ class CartService {
     /* 
         shop_order_ids [
             {
-                shopId,
+                shop_owner,
                 item_products: [
                     {
                         quantity,
                         price,
-                        shopId,
+                        shop_owner,
                         old_quantity,
                         productId
                     }

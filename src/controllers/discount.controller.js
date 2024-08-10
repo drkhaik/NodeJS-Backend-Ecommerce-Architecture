@@ -4,7 +4,7 @@ const discountService = require('../services/discount.service');
 const { SuccessResponse } = require("../core/success.response");
 
 class DiscountController {
-    createDiscountCode = async(req, res, next) => {
+    createDiscountCode = async (req, res, next) => {
         new SuccessResponse({
             message: 'Create new Discount Code Success',
             metadata: await discountService.createDiscountCode({
@@ -29,6 +29,7 @@ class DiscountController {
             message: 'Apply Discount Code Success',
             metadata: await discountService.checkDiscountAmount({
                 ...req.body,
+                shop_owner: req.body.shopId
                 // shop_owner: req.user.userId
             }),
         }).send(res);
