@@ -5,8 +5,8 @@ const { promisify } = require('util'); // convert callback to promise, avoid cal
 const { reservationInventory } = require('../models/repositories/inventory.repo');
 const redisClient = redis.createClient();
 
-const pexpire = promisify(redisClient.pexpire).bind(redisClient);
-const setnxAsync = promisify(redisClient.setnx).bind(redisClient);
+const pexpire = promisify(redisClient.pExpire).bind(redisClient);
+const setnxAsync = promisify(redisClient.setNX).bind(redisClient);
 
 /*
     The acquireLock function uses Redis setnx (Set if Not eXists) to attempt to generate a unique lock 
