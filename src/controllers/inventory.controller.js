@@ -3,7 +3,7 @@
 const inventoryService = require('../services/inventory.service');
 const { SuccessResponse } = require("../core/success.response");
 
-class CartController {
+class InventoryController {
 
     addStockToInventory = async (req, res, next) => {
         new SuccessResponse({
@@ -14,4 +14,4 @@ class CartController {
 
 }
 
-module.exports = new CartController();
+module.exports = new InventoryController();

@@ -55,9 +55,13 @@ explain select * from users where user_status = '1'; -- key = idx_status
 explain select * from users where user_email like 'messi@%'; -- key = idx_email_age_name
 explain select * from users where user_email like '%messi@%'; -- key = null
 
--- OR
+-- AND OR
 explain select * from users where user_id = 2 and user_status = 1; -- key = Primary
-explain select * from users where user_id = 2 OR user_status = 1; -- key = Primary, idx_status
-explain select * from users where user_id = 2 or user_status = 1 or user_address = 'abc'; -- key = Primary, idx_status
+explain select * from users where user_id = 2 OR user_status = 1; -- key = null
+explain select * from users where user_id = 2 or user_status = 1 or user_address = 'abc'; -- key = null
+
+-- ORDER BY
+explain select * from users where user_email = 'messi' order by user_email, user_name; -- key = idx_email_age_name
+explain select * from users order by user_email, user_name; -- key = null
 
 
