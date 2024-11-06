@@ -7,7 +7,7 @@ const DOCUMENT_NAME = 'Role';
 const COLLECTION_NAME = 'Roles';
 
 /* 
-role_grants_of_admin = [
+const role_grants_of_admin = [
     {
         resource: profile,
         actions: ['create', 'read', 'update:any', 'delete'],
@@ -20,7 +20,7 @@ role_grants_of_admin = [
     }
 ]
 
-role_grants_of_shop = [
+const role_grants_of_shop = [
     {
         resource: profile,
         actions: ['read', 'update:own', 'delete'],
